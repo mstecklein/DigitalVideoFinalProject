@@ -304,7 +304,8 @@ def propagation(args, frame_inapint_model=None):
                 with torch.no_grad():
                     tmp_inpaint_res = frame_inapint_model.forward(result_pool[id], label_pool[id])
                 label_pool[id] = label_pool[id] * 0.
-                result_pool[id] = tmp_inpaint_res
+                if os.environ.get("NO_INPAINT") is None: # else remove image inpainting
+                    result_pool[id] = tmp_inpaint_res
         else:
             print(frames_num, 'frames have been inpainted by', iter_num, 'iterations.')
 

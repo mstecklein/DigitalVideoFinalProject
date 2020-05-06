@@ -1,0 +1,2 @@
+#python tools/train_refine.py --model_name stage3 --FIX_MASK --MASK_MODE mid-bbox --TRAIN_LIST train_list_stage3.txt --DATA_ROOT Flows_combined_stage2 --GT_FLOW_ROOT Flows_combined_FlowNet --MODEL_SAVE_STEP 200 --batch_size 8 --PRETRAINED_MODEL my_trained_models/davis_stage3.pth --PRETRAINED
+python tools/train_refine.py --model_name stage3 --FIX_MASK --MASK_MODE mid-bbox --TRAIN_LIST train_list_stage3.txt --DATA_ROOT Flows_combined_stage2 --GT_FLOW_ROOT Flows_combined_FlowNet --MODEL_SAVE_STEP 200 --batch_size 8 --PRETRAINED_MODEL snapshots/stage3/DFI_4799.pth --resume

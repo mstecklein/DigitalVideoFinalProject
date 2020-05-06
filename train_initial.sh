@@ -1,0 +1,2 @@
+#python tools/train_initial.py --model_name stage1 --FIX_MASK --MASK_MODE mid-bbox --TRAIN_LIST train_list_initial.txt --DATA_ROOT Flows_combined_FlowNet --INITIAL_HOLE --MODEL_SAVE_STEP 200 --batch_size 32 --PRETRAINED_MODEL my_trained_models/resnet50_stage1.pth --PRETRAINED
+python tools/train_initial.py --model_name stage1 --FIX_MASK --MASK_MODE mid-bbox --TRAIN_LIST train_list_initial.txt --DATA_ROOT Flows_combined_FlowNet --INITIAL_HOLE --MODEL_SAVE_STEP 200 --batch_size 32 --PRETRAINED_MODEL snapshots/stage1/ckpt/DFI_5999.pth --resume

@@ -165,8 +165,10 @@ def get_warp_label(flow1, flow2, label1, th=50, value=0):
                                             newaxis] * flow1[sx_mat[:, :, i],
                                                              sy_mat[:, :, i], :]
 
+    ''' Remove validity check
     valid = valid & (np.linalg.norm(
         flow_t[:, :, [1, 0]] + np.dstack((dx, dy)) - grid, axis=2) < th)
+   '''
 
     flow_t = (flow2 - flow_t) / 2.0
     dx = grid[:, :, 0] + flow_t[:, :, 1]

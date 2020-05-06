@@ -90,11 +90,11 @@ def propagation(args, frame_inapint_model=None):
     while masked_frame_num > 0:
 
         results = [
-            np.zeros(image.shape + (2,), dtype=image.dtype)
+            np.zeros(image.shape + (1,), dtype=image.dtype)
             for _ in range(frames_num)
         ]
         time_stamp = [
-            -np.ones(image.shape[:2] + (2,), dtype=int)
+            -np.ones(image.shape[:2] + (1,), dtype=int)
             for _ in range(frames_num)
         ]
 
@@ -174,6 +174,7 @@ def propagation(args, frame_inapint_model=None):
             results[th][label == 0, :, 0] = image[label == 0, :]
             time_stamp[th][label == 0, 0] = th
 
+        '''
         sys.stdout.write('\n')
         print('Iter', iter_num, 'Backward Propagation')
         # backward
@@ -254,6 +255,7 @@ def propagation(args, frame_inapint_model=None):
             time_stamp[th][label == 0, 1] = th
 
         sys.stdout.write('\n')
+        '''
         tmp_label_seq = np.zeros(frames_num-1)
         print('Iter', iter_num, 'Merge Results')
         # merge
@@ -261,15 +263,16 @@ def propagation(args, frame_inapint_model=None):
         for th in range(0, frames_num - 1):
             prog_bar.update()
             v1 = (time_stamp[th][..., 0] == -1)
-            v2 = (time_stamp[th][..., 1] == -1)
+            #v2 = (time_stamp[th][..., 1] == -1)
 
-            hole_v = (v1 & v2)
+            hole_v = v1#(v1 & v2)
 
             result = results[th][..., 0].copy()
-            result[v1, :] = results[th][v1, :, 1].copy()
+            #result[v1, :] = results[th][v1, :, 1].copy()
 
-            v3 = ((v1 == 0) & (v2 == 0))
+            v3 = (v1==0)#((v1 == 0) & (v2 == 0))
 
+            '''
             dist = time_stamp[th][..., 1] - time_stamp[th][..., 0]
             dist[dist < 1] = 1
 
@@ -278,6 +281,8 @@ def propagation(args, frame_inapint_model=None):
 
             result[v3, :] = (results[th][..., 1] * w2[..., np.newaxis] +
                              results[th][..., 0] * (1 - w2)[..., np.newaxis])[v3, :]
+            '''
+            result[v3, :] = results[th][..., 0][v3, :]
 
             result_pool[th] = result.copy()
 

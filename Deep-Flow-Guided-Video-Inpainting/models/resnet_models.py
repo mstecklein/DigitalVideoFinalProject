@@ -227,6 +227,14 @@ class ResNet(nn.Module):
         return nn.Sequential(*layers)
 
     def forward(self, x):
+
+        # zero-out future frames' inputs
+        if x.shape[1] == 33:
+            x[:,3*6:,...] = 0
+        if x.shape[1] == 66:
+            x[:,3*6:3*11,...] = 0
+            x[:,3*(11+6):,...] = 0
+
         input_size = x.size()[2:4]
         x = self.conv1(x)
         x = self.bn1(x)
